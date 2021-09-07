@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using web_api_pract.Data;
+using web_api_pract.Data.Services;
 
 namespace web_api_pract
 {
@@ -34,6 +35,8 @@ namespace web_api_pract
             services.AddControllers();
             //config appdbcontect
             services.AddDbContext<ApplicationDbContext>(options=>options.UseSqlServer(connectionString));
+            //config services
+            services.AddTransient<ProjectService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "web_api_pract", Version = "v1" });
