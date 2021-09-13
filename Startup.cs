@@ -37,6 +37,10 @@ namespace web_api_pract
             services.AddDbContext<ApplicationDbContext>(options=>options.UseSqlServer(connectionString));
             //config services
             services.AddTransient<ProjectService>();
+            services.AddTransient<ManagerService>();
+            services.AddTransient<DevloperService>();
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "web_api_pract", Version = "v1" });

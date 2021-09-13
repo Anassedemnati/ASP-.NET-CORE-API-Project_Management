@@ -22,14 +22,17 @@ namespace web_api_pract.Data
                     Name="Project web",
                     createDate=DateTime.Now.AddDays(-10),
                     finished= false,
-                    custumer="Jumia"
+                    custumer="Jumia",
+                    ManagerId=1
+
                     },
                     new Project
                     {
                         Name = "Project backend",
                         createDate = DateTime.Now.AddDays(-20),
                         finished = false,
-                        custumer = "Avito"
+                        custumer = "Avito",
+                        ManagerId = 1
 
                     }
                     );

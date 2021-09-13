@@ -33,10 +33,10 @@ namespace web_api_pract.Controllers
             return Ok(project);
         }
 
-        [HttpPost("add-project")]
-        public IActionResult AddProject([FromBody] ProjectVM project)
+        [HttpPost("add-project-with-manager")]
+        public IActionResult AddProjectWithManager([FromBody] ProjectVM project)
         {
-            _projectService.AddProject(project);
+            _projectService.AddProjectWithManager(project);
             return Ok();
         }
         [HttpPut("update-project-by-id/{id}")]

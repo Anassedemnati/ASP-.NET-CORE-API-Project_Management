@@ -15,20 +15,48 @@ namespace web_api_pract.Data.Services
         {
             _context = context;
         }
-        public void AddProject(ProjectVM project) {
+        public void AddProjectWithManager(ProjectVM project) {
 
             var _project = new Project() {
                 Name = project.Name,
                 createDate = DateTime.Now,
                 custumer = project.custumer,
-                finished = project.finished 
+                finished = project.finished,
+                ManagerId= project.ManagerId
+                
             };
             _context.Projects.Add(_project);
             _context.SaveChanges();
+            foreach (var id in project.DevloperId)
+            {
+                var _project_devloper = new Project_Devloper() {
+                    ProjectId = _project.Id,
+                    DevloperId=id
+                
+                };
+                _context.Project_Devlopers.Add(_project_devloper);
+                _context.SaveChanges();
+            }
 
         }
         public List<Project> GetAllProject() =>_context.Projects.ToList();
-        public Project GetProjectById(int projectId) => _context.Projects.FirstOrDefault(i=>i.Id== projectId);
+        public ProjectWhithMangerVM GetProjectById(int projectId)
+        {
+            var _projectWhitManager = _context.Projects.Where(n=>n.Id==projectId).Select(project => new ProjectWhithMangerVM()
+            {
+                Name = project.Name,
+                createDate = DateTime.Now,
+                custumer = project.custumer,
+                finished = project.finished,
+                ManagerName=project.manager.fullName,
+                DevlopersName=project.project_devlopers.Select(n=>n.devloper.fullName).ToList()
+                
+                
+
+
+            }).FirstOrDefault();
+            return _projectWhitManager;
+        }
         public Project UpdateProjectById(int projectId,ProjectVM project)
         {
            var _project = _context.Projects.FirstOrDefault(n => n.Id == projectId);

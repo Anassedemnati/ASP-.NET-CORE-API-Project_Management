@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using web_api_pract.Data;
 
 namespace web_api_pract.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210913145523_many_to_many_project_devloper")]
+    partial class many_to_many_project_devloper
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +33,7 @@ namespace web_api_pract.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Devlopers");
+                    b.ToTable("Devloper");
                 });
 
             modelBuilder.Entity("web_api_pract.Data.Models.Manager", b =>
