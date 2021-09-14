@@ -43,8 +43,16 @@ namespace web_api_pract.Data.Services
             return _managerData;
         }
 
-
-
-
+        public void DeleteManagerById(int managerId)
+        {
+            var _manager = _context.Managers.FirstOrDefault(n=>n.Id==managerId);
+            if (_manager!=null)
+            {
+                _context.Managers.Remove(_manager);
+                _context.SaveChanges();
+            }
+           
+        }
+        public List<Manager> GetAllManagers() => _context.Managers.ToList();
     }
 }

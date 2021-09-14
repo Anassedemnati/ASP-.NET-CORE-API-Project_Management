@@ -36,5 +36,16 @@ namespace web_api_pract.Data.Services
 
             return _devloper;
         }
+        public void DeleteDevloperById(int DevloperId)
+        {
+            var _devloper = _context.Devlopers.FirstOrDefault(n => n.Id == DevloperId);
+            if (_devloper != null)
+            {
+                _context.Devlopers.Remove(_devloper);
+                _context.SaveChanges();
+            }
+
+        }
+        public List<Devloper> GetAllDevloper() => _context.Devlopers.ToList();
     }
 }

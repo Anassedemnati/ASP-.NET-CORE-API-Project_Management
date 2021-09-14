@@ -19,17 +19,30 @@ namespace web_api_pract.Controllers
         {
             _devloperService = devloperService;
         }
+        [HttpGet("get-all-devlopers")]
+        public IActionResult GetAllDevlopers()
+        {
+            var _devlopers = _devloperService.GetAllDevloper();
+            return Ok(_devlopers);
+        }
+        
+        [HttpGet("get-devloper-whith-projects-by-id/{id}")]
+        public IActionResult GetDevloperWhithProject(int id)
+        {
+            var _respensee = _devloperService.GetDevloperWithProjects(id);
+            return Ok(_respensee);
+        }
         [HttpPost("add-devloper")]
         public IActionResult AddManager([FromBody] DevloperVM devloper)
         {
             _devloperService.AddDevloper(devloper);
             return Ok();
         }
-        [HttpGet("get-devloper-whith-projects-by-id/{id}")]
-        public IActionResult GetDevloperWhithProject(int id)
+        [HttpDelete("delete-devloper-by-id/{id}")]
+        public IActionResult DeleteDevloper(int id)
         {
-            var _respensee = _devloperService.GetDevloperWithProjects(id);
-            return Ok(_respensee);
+            _devloperService.DeleteDevloperById(id);
+            return Ok();
         }
     }
 }

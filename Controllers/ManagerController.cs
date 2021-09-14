@@ -19,18 +19,30 @@ namespace web_api_pract.Controllers
         {
             _managerService = managerService;
         }
-
+        [HttpGet("get-all-managers")]
+        public IActionResult GetAllManagers()
+        {
+            var _managers = _managerService.GetAllManagers();
+            return Ok(_managers);
+        }
+       
+        [HttpGet("get-manager-data-by-id/{id}")]
+        public IActionResult GetManagerData(int id)
+        {
+            var _respense = _managerService.GetManagerData(id);
+            return Ok(_respense);
+        }
         [HttpPost("add-manager")]
         public IActionResult AddManager([FromBody] ManagerVM manager)
         {
             _managerService.AddManager(manager);
             return Ok();
         }
-        [HttpGet("get-manager-data-by-id/{id}")]
-        public IActionResult GetManagerData(int id)
+        [HttpDelete("delete-manager-by-id/{id}")]
+        public IActionResult DeleteManager(int id)
         {
-            var _respense = _managerService.GetManagerData(id);
-            return Ok(_respense);
+            _managerService.DeleteManagerById(id);
+            return Ok();
         }
     }
 }

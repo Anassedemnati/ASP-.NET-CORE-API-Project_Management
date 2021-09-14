@@ -65,6 +65,7 @@ namespace web_api_pract.Data.Services
                 _project.Name = project.Name;
                 _project.custumer = project.custumer;
                 _project.finished = project.finished;
+                _project.ManagerId = project.ManagerId;
                 _context.SaveChanges();
             }
             return _project;
