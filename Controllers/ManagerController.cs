@@ -38,6 +38,13 @@ namespace web_api_pract.Controllers
             _managerService.AddManager(manager);
             return Ok();
         }
+        [HttpPut("update-manager-by-id")]
+        public IActionResult UpdateManagerById(int id,[FromBody] ManagerVM manager)
+        {
+            var _UpdatedManager = _managerService.UpdateManagerByID(id, manager);
+            return Ok(_UpdatedManager);
+        }
+
         [HttpDelete("delete-manager-by-id/{id}")]
         public IActionResult DeleteManager(int id)
         {

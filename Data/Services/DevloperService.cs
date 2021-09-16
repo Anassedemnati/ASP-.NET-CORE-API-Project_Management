@@ -47,5 +47,16 @@ namespace web_api_pract.Data.Services
 
         }
         public List<Devloper> GetAllDevloper() => _context.Devlopers.ToList();
+        public Devloper UpdateDevloperById(int devloperId, DevloperVM devloper)
+        {
+            var _devloper = _context.Devlopers.FirstOrDefault(n => n.Id == devloperId);
+            if (_devloper != null)
+            {
+                _devloper.fullName = devloper.fullName;
+               
+                _context.SaveChanges();
+            }
+            return _devloper;
+        }
     }
 }

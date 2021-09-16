@@ -54,5 +54,15 @@ namespace web_api_pract.Data.Services
            
         }
         public List<Manager> GetAllManagers() => _context.Managers.ToList();
+        public Manager UpdateManagerByID(int managerId, ManagerVM manager)
+        {
+            var _manager = _context.Managers.FirstOrDefault(n => n.Id == managerId);
+            if (_manager!=null)
+            {
+                _manager.fullName = manager.fullName;
+                _context.SaveChanges();
+            }
+            return _manager;
+        }
     }
 }

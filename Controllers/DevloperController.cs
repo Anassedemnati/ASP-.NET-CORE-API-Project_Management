@@ -38,11 +38,18 @@ namespace web_api_pract.Controllers
             _devloperService.AddDevloper(devloper);
             return Ok();
         }
+        [HttpPut("update-devloper-by-id")]
+        public IActionResult UpdateDevloperById(int id, [FromBody] DevloperVM devloper)
+        {
+            var _UpdatedDevloper = _devloperService.UpdateDevloperById(id, devloper);
+            return Ok(_UpdatedDevloper);
+        }
         [HttpDelete("delete-devloper-by-id/{id}")]
         public IActionResult DeleteDevloper(int id)
         {
             _devloperService.DeleteDevloperById(id);
             return Ok();
         }
+       
     }
 }
