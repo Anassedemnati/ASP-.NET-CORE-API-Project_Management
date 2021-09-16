@@ -23,20 +23,31 @@ namespace web_api_pract.Controllers
         public IActionResult GetAllDevlopers()
         {
             var _devlopers = _devloperService.GetAllDevloper();
-            return Ok(_devlopers);
+            if (_devlopers != null)
+            {
+                return Ok(_devlopers);
+            }
+            else
+                return NotFound();
         }
         
         [HttpGet("get-devloper-whith-projects-by-id/{id}")]
         public IActionResult GetDevloperWhithProject(int id)
         {
             var _respensee = _devloperService.GetDevloperWithProjects(id);
-            return Ok(_respensee);
+            if (_respensee != null)
+            {
+                return Ok(_respensee);
+            }
+            else
+                return NotFound();
+            
         }
         [HttpPost("add-devloper")]
-        public IActionResult AddManager([FromBody] DevloperVM devloper)
+        public IActionResult AddDevloper([FromBody] DevloperVM devloper)
         {
-            _devloperService.AddDevloper(devloper);
-            return Ok();
+           var _NewDevloper= _devloperService.AddDevloper(devloper);
+            return Created(nameof(AddDevloper), _NewDevloper);
         }
         [HttpPut("update-devloper-by-id")]
         public IActionResult UpdateDevloperById(int id, [FromBody] DevloperVM devloper)

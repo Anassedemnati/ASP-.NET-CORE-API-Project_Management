@@ -23,21 +23,33 @@ namespace web_api_pract.Controllers
         [HttpGet("get-all-project")]
         public IActionResult GetAllProject()
         {
-            var allproject = _projectService.GetAllProject();
-            return Ok(allproject);
+            var _allproject = _projectService.GetAllProject();
+            if (_allproject != null)
+            {
+                return Ok(_allproject);
+            }
+            else
+                return NotFound();
+           
         }
         [HttpGet("get-project-by-id/{id}")]
         public IActionResult GetProjectById(int id)
         {
-            var project = _projectService.GetProjectById(id);
-            return Ok(project);
+            var _project = _projectService.GetProjectById(id);
+            if (_project != null)
+            {
+                return Ok(_project);
+            }
+            else
+                return NotFound();
+            
         }
 
         [HttpPost("add-project-with-manager")]
         public IActionResult AddProjectWithManager([FromBody] ProjectVM project)
         {
-            _projectService.AddProjectWithManager(project);
-            return Ok();
+            var _result=_projectService.AddProjectWithManager(project);
+            return Created(nameof(AddProjectWithManager),_result);
         }
         [HttpPut("update-project-by-id/{id}")]
         public IActionResult UpdateProjectById(int id,[FromBody] ProjectVM project)

@@ -23,21 +23,51 @@ namespace web_api_pract.Controllers
         public IActionResult GetAllManagers()
         {
             var _managers = _managerService.GetAllManagers();
-            return Ok(_managers);
+            if (_managers!=null)
+            {
+                return Ok(_managers);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
        
         [HttpGet("get-manager-data-by-id/{id}")]
         public IActionResult GetManagerData(int id)
         {
             var _respense = _managerService.GetManagerData(id);
-            return Ok(_respense);
+
+            if (_respense != null)
+            {
+                return Ok(_respense);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+        [HttpGet("get-manager-by-id/{id}")]
+        public IActionResult GetManagerById(int id)
+        {
+            var _respense = _managerService.GetManagerById(id);
+            if (_respense!= null)
+            {
+                return Ok(_respense);
+            }
+            else
+            {
+                return NotFound();
+            }
+            
         }
         [HttpPost("add-manager")]
         public IActionResult AddManager([FromBody] ManagerVM manager)
         {
-            _managerService.AddManager(manager);
-            return Ok();
+            var NewManager =_managerService.AddManager(manager);
+            return Created(nameof(AddManager),NewManager) ;
         }
+
         [HttpPut("update-manager-by-id")]
         public IActionResult UpdateManagerById(int id,[FromBody] ManagerVM manager)
         {

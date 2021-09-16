@@ -15,7 +15,7 @@ namespace web_api_pract.Data.Services
         {
             _context = context;
         }
-        public void AddProjectWithManager(ProjectVM project) {
+        public Project AddProjectWithManager(ProjectVM project) {
 
             var _project = new Project() {
                 Name = project.Name,
@@ -37,6 +37,7 @@ namespace web_api_pract.Data.Services
                 _context.Project_Devlopers.Add(_project_devloper);
                 _context.SaveChanges();
             }
+            return _project;
 
         }
         public List<Project> GetAllProject() =>_context.Projects.ToList();

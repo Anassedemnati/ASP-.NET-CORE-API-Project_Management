@@ -15,7 +15,7 @@ namespace web_api_pract.Data.Services
         {
             _context = context;
         }
-        public void AddManager(ManagerVM manager)
+        public Manager AddManager(ManagerVM manager)
         {
 
             var _manager = new Manager()
@@ -25,6 +25,7 @@ namespace web_api_pract.Data.Services
             };
             _context.Managers.Add(_manager);
             _context.SaveChanges();
+            return _manager;
 
         }
         public ManagerWithProjectsAndDevlopersVM GetManagerData(int managerid)
@@ -42,6 +43,7 @@ namespace web_api_pract.Data.Services
 
             return _managerData;
         }
+        public Manager GetManagerById(int managerId) => _context.Managers.FirstOrDefault(n => n.Id == managerId);
 
         public void DeleteManagerById(int managerId)
         {

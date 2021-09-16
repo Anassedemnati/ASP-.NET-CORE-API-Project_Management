@@ -15,7 +15,7 @@ namespace web_api_pract.Data.Services
         {
             _context = context;
         }
-        public void AddDevloper(DevloperVM devloper)
+        public Devloper AddDevloper(DevloperVM devloper)
         {
 
             var _devloper = new Devloper()
@@ -25,6 +25,7 @@ namespace web_api_pract.Data.Services
             };
             _context.Devlopers.Add(_devloper);
             _context.SaveChanges();
+            return _devloper;
 
         }
         public DevloperWithProjectsVM GetDevloperWithProjects(int devloperId)
