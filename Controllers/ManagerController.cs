@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using web_api_pract.Data.Services;
 using web_api_pract.Data.ViewModels;
+using web_api_pract.Exceptions;
 
 namespace web_api_pract.Controllers
 {
@@ -64,22 +65,53 @@ namespace web_api_pract.Controllers
         [HttpPost("add-manager")]
         public IActionResult AddManager([FromBody] ManagerVM manager)
         {
-            var NewManager =_managerService.AddManager(manager);
-            return Created(nameof(AddManager),NewManager) ;
+            try
+            {
+                var NewManager = _managerService.AddManager(manager);
+                return Created(nameof(AddManager), NewManager);
+            }
+            catch(ManagerNameException ex)
+            {
+                return BadRequest($"{ex.Message }, Manager name {ex._ManagerName}");
+            }
+            catch (Exception ex )
+            {
+
+                return BadRequest(ex.Message);
+            }
+          
         }
 
         [HttpPut("update-manager-by-id")]
         public IActionResult UpdateManagerById(int id,[FromBody] ManagerVM manager)
         {
-            var _UpdatedManager = _managerService.UpdateManagerByID(id, manager);
-            return Ok(_UpdatedManager);
+            try
+            {
+                var _UpdatedManager = _managerService.UpdateManagerByID(id, manager);
+                return Ok(_UpdatedManager);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+            
         }
 
         [HttpDelete("delete-manager-by-id/{id}")]
         public IActionResult DeleteManager(int id)
         {
-            _managerService.DeleteManagerById(id);
-            return Ok();
+            try
+            {
+                _managerService.DeleteManagerById(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+           
         }
     }
 }

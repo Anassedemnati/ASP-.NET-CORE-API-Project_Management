@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using web_api_pract.Data.Models;
 using web_api_pract.Data.ViewModels;
+using web_api_pract.Exceptions;
 
 namespace web_api_pract.Data.Services
 {
@@ -17,7 +19,7 @@ namespace web_api_pract.Data.Services
         }
         public Manager AddManager(ManagerVM manager)
         {
-
+            if (StringStartWithNumber(manager.fullName)) throw new ManagerNameException("Name start with number",manager.fullName);
             var _manager = new Manager()
             {
                 fullName = manager.fullName,
@@ -54,6 +56,7 @@ namespace web_api_pract.Data.Services
                 _context.SaveChanges();
             }
            
+           
         }
         public List<Manager> GetAllManagers() => _context.Managers.ToList();
         public Manager UpdateManagerByID(int managerId, ManagerVM manager)
@@ -63,8 +66,14 @@ namespace web_api_pract.Data.Services
             {
                 _manager.fullName = manager.fullName;
                 _context.SaveChanges();
+                return _manager;
             }
-            return _manager;
+            else
+            {
+                throw new Exception($"the Manager with the id : {managerId} dose not exist!");
+            }
+
         }
+        private bool StringStartWithNumber(string Name) => (Regex.IsMatch(Name, @"^\d"));
     }
 }

@@ -68,8 +68,13 @@ namespace web_api_pract.Data.Services
                 _project.finished = project.finished;
                 _project.ManagerId = project.ManagerId;
                 _context.SaveChanges();
+                return _project;
             }
-            return _project;
+            else
+            {
+                throw new Exception($"the project with id : {projectId} dose not exist!");
+            }
+            
         }
         public void DeleteProjectById(int projectId)
         {
@@ -78,6 +83,10 @@ namespace web_api_pract.Data.Services
             {
                 _context.Projects.Remove(_project);
                 _context.SaveChanges();
+            }
+            else
+            {
+                throw new Exception($"the project with id : {projectId} dose not exist!");
             }
         }
     }

@@ -54,14 +54,31 @@ namespace web_api_pract.Controllers
         [HttpPut("update-project-by-id/{id}")]
         public IActionResult UpdateProjectById(int id,[FromBody] ProjectVM project)
         {
-            var UpdatedProject = _projectService.UpdateProjectById(id, project);
-            return Ok(UpdatedProject);
+            try
+            {
+                var UpdatedProject = _projectService.UpdateProjectById(id, project);
+                return Ok(UpdatedProject);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+           
         }
         [HttpDelete("delete-project-by-id/{id}")]
         public IActionResult DeleteProjectById(int id)
         {
-            _projectService.DeleteProjectById(id);
-            return Ok();
+            try
+            {
+                _projectService.DeleteProjectById(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+            
         }
     }
 }

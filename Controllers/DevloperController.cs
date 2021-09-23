@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using web_api_pract.Data.Services;
 using web_api_pract.Data.ViewModels;
+using web_api_pract.Exceptions;
 
 namespace web_api_pract.Controllers
 {
@@ -46,20 +47,51 @@ namespace web_api_pract.Controllers
         [HttpPost("add-devloper")]
         public IActionResult AddDevloper([FromBody] DevloperVM devloper)
         {
-           var _NewDevloper= _devloperService.AddDevloper(devloper);
-            return Created(nameof(AddDevloper), _NewDevloper);
+            try
+            {
+                var _NewDevloper = _devloperService.AddDevloper(devloper);
+                return Created(nameof(AddDevloper), _NewDevloper);
+            }
+            catch(DevloperNameException ex)
+            {
+                return BadRequest($"{ex.Message }, Devloper name {ex._DevloperName}");
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+          
         }
         [HttpPut("update-devloper-by-id")]
         public IActionResult UpdateDevloperById(int id, [FromBody] DevloperVM devloper)
         {
-            var _UpdatedDevloper = _devloperService.UpdateDevloperById(id, devloper);
-            return Ok(_UpdatedDevloper);
+            try
+            {
+                var _UpdatedDevloper = _devloperService.UpdateDevloperById(id, devloper);
+                return Ok(_UpdatedDevloper);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+            
         }
         [HttpDelete("delete-devloper-by-id/{id}")]
         public IActionResult DeleteDevloper(int id)
         {
-            _devloperService.DeleteDevloperById(id);
-            return Ok();
+            try
+            {
+                _devloperService.DeleteDevloperById(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+            
         }
        
     }

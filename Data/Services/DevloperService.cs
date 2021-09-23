@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using web_api_pract.Data.Models;
 using web_api_pract.Data.ViewModels;
+using web_api_pract.Exceptions;
 
 namespace web_api_pract.Data.Services
 {
@@ -17,7 +19,10 @@ namespace web_api_pract.Data.Services
         }
         public Devloper AddDevloper(DevloperVM devloper)
         {
+            if (StringStartWithNumber(devloper.fullName)) throw new DevloperNameException("Name start with number",devloper.fullName);
+            
 
+            
             var _devloper = new Devloper()
             {
                 fullName = devloper.fullName,
@@ -45,6 +50,10 @@ namespace web_api_pract.Data.Services
                 _context.Devlopers.Remove(_devloper);
                 _context.SaveChanges();
             }
+            else
+            {
+                throw new Exception($"the devloper with id : {DevloperId} does not exist!");
+            }
 
         }
         public List<Devloper> GetAllDevloper() => _context.Devlopers.ToList();
@@ -56,8 +65,17 @@ namespace web_api_pract.Data.Services
                 _devloper.fullName = devloper.fullName;
                
                 _context.SaveChanges();
+                return _devloper;
             }
-            return _devloper;
+             else
+            {
+                throw new Exception($"the devloper with id : {devloperId} does not exist!");
+            }
         }
+        private bool StringStartWithNumber(string Name) => (Regex.IsMatch(Name, @"^\d"));
+        
+            //if (Regex.IsMatch(Name, @"^\d")) return true;
+            //return false;
+        
     }
 }
