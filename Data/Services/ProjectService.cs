@@ -52,8 +52,6 @@ namespace web_api_pract.Data.Services
                 ManagerName=project.manager.fullName,
                 DevlopersName=project.project_devlopers.Select(n=>n.devloper.fullName).ToList()
                 
-                
-
 
             }).FirstOrDefault();
             return _projectWhitManager;
